@@ -1,0 +1,72 @@
+[
+    {
+        "titulo" : "Titulo 1",
+        "autor" : "Autor 1",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "titulo" : "Titulo 2",
+        "autor" : "Autor 2",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "titulo" : "Titulo 3",
+        "autor" : "Autor 3",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "titulo" : "Titulo 4",
+        "autor" : "Autor 4",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "titulo" : "Titulo 5",
+        "autor" : "Autor 5",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "titulo" : "Titulo 6",
+        "autor" : "Autor 6",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "titulo" : "Titulo 7",
+        "autor" : "Autor 7",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "titulo" : "Titulo 8",
+        "autor" : "Autor 8",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "titulo" : "Titulo 9",
+        "autor" : "Autor 9",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "titulo" : "Titulo 10",
+        "autor" : "Autor 10",
+        "yearPublication" : "2019",
+        "isbn": "1234567890",
+        "available": true
+    }
+]
