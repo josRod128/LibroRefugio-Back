@@ -43,8 +43,11 @@ app.get('/book/:id', (req, res) => {
         const id = parseInt(req.params.id);
         const books = JSON.parse(fs.readFileSync('./bd.json'));
         const book = books.filter((book) => book.id === id);
-    
-        res.json(book[0]);
+        if (book.length === 0) {
+            res.json({status: 404, message: 'Libro no encontrado'});
+        }else{
+            res.json({status: 200, book: book[0]});
+        }
     }catch (error) {
         res.status(500).json(error.message);
     }
