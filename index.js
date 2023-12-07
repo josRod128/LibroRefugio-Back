@@ -39,7 +39,7 @@ app.get('/book/:id', (req, res) => {
 
 app.post('/book', (req, res) => {
     const books = JSON.parse(fs.readFileSync('./bd.json'));
-    const lastBook = books.length > 0 ?  books[books.length - 1]['id'] : 0 ;
+    const lastBook = books.length > 0 ? books[books.length - 1]['id'] : 0;
     let date = new Date(req.body.publicationYear).getFullYear();
     const newBook = {
         id: lastBook + 1,
@@ -56,16 +56,25 @@ app.post('/book', (req, res) => {
 app.put('/book/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const books = JSON.parse(fs.readFileSync('./bd.json'));
-    let date = new Date(req.body.publicationYear).getFullYear();
-    books.forEach((book) => {
-        if (book.id === id) {
-            book.title = req.body.title;
-            book.author = req.body.author;
-            book.yearPublication = date;
-            book.isbn = req.body.isbn;
-            book.available = req.body.available;
-        }
-    });
+    const cont = Object.keys(req.body).length;
+    if (cont === 1) {
+        books.forEach((book) => {
+            if (book.id === id) {
+                book.available = req.body.available;
+            }
+        });
+    } else {
+        let date = new Date(req.body.publicationYear).getFullYear();
+        books.forEach((book) => {
+            if (book.id === id) {
+                book.title = req.body.title;
+                book.author = req.body.author;
+                book.yearPublication = date;
+                book.isbn = req.body.isbn;
+                book.available = req.body.available;
+            }
+        });
+    }
     fs.writeFileSync('./bd.json', JSON.stringify(books));
     res.send(true);
 });
