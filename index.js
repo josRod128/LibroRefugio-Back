@@ -30,7 +30,7 @@ app.get('/books/search/:text', (req, res) => {
     res.json(book);
 });
 
-app.post('/books', (req, res) => {
+app.post('/book', (req, res) => {
     const books = JSON.parse(fs.readFileSync('./bd.json'));
     const lastBook = books.length > 0 ?  books[books.length - 1]['id'] : 0 ;
     let date = new Date(req.body.publicationYear).getFullYear();
