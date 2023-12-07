@@ -14,6 +14,13 @@ app.use(cors({
 app.get('/books', (req, res) => {
     res.json(JSON.parse(fs.readFileSync('./bd.json')));
 });
+app.get('/books/search/:text', (req, res) => {
+    const data = req.params.text.toLowerCase();
+    const books = JSON.parse(fs.readFileSync('./bd.json'));
+    const book = books.filter((book) => book.title.toLowerCase().includes(data) || book.author.toLowerCase().includes(data));
+    
+    res.json(book);
+});
 
 app.delete('/book/:id', (req, res) => {
     const id = parseInt(req.params.id);
@@ -23,6 +30,7 @@ app.delete('/book/:id', (req, res) => {
     fs.writeFileSync('./bd.json', JSON.stringify(newBooks));
     res.json(newBooks);
 });
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
