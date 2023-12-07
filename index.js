@@ -12,6 +12,29 @@ app.use(bodyParser.urlencoded({
 }));
 const port = process.env.PORT || 3000;
 
+const validateTitle = (data) => {
+    let regex = /^[A-Za-zÀ-ÿ\u00f1\u00d10-9\s]+$/g;
+    return regex.test(data)
+  };
+  const validateAuthor = (data) => {
+    let regex = /^[A-Za-zÀ-ÿ\u00f1\u00d1\s]+$/g;
+    return regex.test(data)
+  };
+  const validatePublicationYear = (data) => {
+    if (
+      new Date(data).getFullYear() <=
+      new Date().getFullYear()
+    ) {
+      return true;
+    } else {
+        return false;
+        }
+  };
+  const validateIsbn = (data) => {
+    let regex = /^[\-0-9]+$/g;
+    return regex.test(data)
+  };
+
 app.use(cors({
     origin: "*",
     methods: ['GET', 'POST', 'PUT', 'DELETE']
@@ -55,6 +78,11 @@ app.get('/book/:id', (req, res) => {
 
 app.post('/book', (req, res) => {
     try{
+        if (!validateTitle(req.body.title) || !validateAuthor(req.body.author) || !validatePublicationYear(req.body.publicationYear) || !validateIsbn(req.body.isbn)){
+            res.json({status: 400, message: 'Datos no validos'});
+            return;
+        }
+
         const books = JSON.parse(fs.readFileSync('./bd.json'));
         const lastBook = books.length > 0 ? books[books.length - 1]['id'] : 0;
         let date = new Date(req.body.publicationYear).getFullYear();
@@ -68,7 +96,8 @@ app.post('/book', (req, res) => {
         };
         books.push(newBook);
         fs.writeFileSync('./bd.json', JSON.stringify(books));
-        res.send(true);
+        res.json({status: 200, message: 'Libro agregado correctamente'});
+
     }catch (error) {
         res.status(500).json(error.message);
     }
