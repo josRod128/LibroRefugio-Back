@@ -46,7 +46,8 @@ app.post('/book', (req, res) => {
         title: req.body.title,
         author: req.body.author,
         yearPublication: date,
-        isbn: req.body.isbn
+        isbn: req.body.isbn,
+        available: true
     };
     books.push(newBook);
     fs.writeFileSync('./bd.json', JSON.stringify(books));
@@ -62,6 +63,7 @@ app.put('/book/:id', (req, res) => {
             book.author = req.body.author;
             book.yearPublication = date;
             book.isbn = req.body.isbn;
+            book.available = req.body.available;
         }
     });
     fs.writeFileSync('./bd.json', JSON.stringify(books));
