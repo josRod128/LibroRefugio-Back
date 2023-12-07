@@ -104,6 +104,10 @@ app.post('/book', (req, res) => {
 });
 app.put('/book/:id', (req, res) => {
     try{
+        if (!validateTitle(req.body.title) || !validateAuthor(req.body.author) || !validatePublicationYear(req.body.publicationYear) || !validateIsbn(req.body.isbn)){
+            res.json({status: 400, message: 'Datos no validos'});
+            return;
+        }
         const id = parseInt(req.params.id);
         const books = JSON.parse(fs.readFileSync('./bd.json'));
         const cont = Object.keys(req.body).length;
@@ -126,7 +130,7 @@ app.put('/book/:id', (req, res) => {
             });
         }
         fs.writeFileSync('./bd.json', JSON.stringify(books));
-        res.send(true);
+        res.json({status: 200, message: 'Libro agregado correctamente'});
     }catch (error) {
         res.status(500).json(error.message);
     }
