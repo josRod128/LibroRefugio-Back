@@ -29,7 +29,6 @@ app.get('/books/search/:text', (req, res) => {
 
     res.json(book);
 });
-
 app.get('/book/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const books = JSON.parse(fs.readFileSync('./bd.json'));
@@ -53,6 +52,22 @@ app.post('/book', (req, res) => {
     fs.writeFileSync('./bd.json', JSON.stringify(books));
     res.send(true);
 });
+app.put('/book/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const books = JSON.parse(fs.readFileSync('./bd.json'));
+    let date = new Date(req.body.publicationYear).getFullYear();
+    books.forEach((book) => {
+        if (book.id === id) {
+            book.title = req.body.title;
+            book.author = req.body.author;
+            book.yearPublication = date;
+            book.isbn = req.body.isbn;
+        }
+    });
+    fs.writeFileSync('./bd.json', JSON.stringify(books));
+    res.send(true);
+});
+
 
 
 app.delete('/book/:id', (req, res) => {
