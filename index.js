@@ -30,6 +30,14 @@ app.get('/books/search/:text', (req, res) => {
     res.json(book);
 });
 
+app.get('/book/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const books = JSON.parse(fs.readFileSync('./bd.json'));
+    const book = books.filter((book) => book.id === id);
+
+    res.json(book[0]);
+});
+
 app.post('/book', (req, res) => {
     const books = JSON.parse(fs.readFileSync('./bd.json'));
     const lastBook = books.length > 0 ?  books[books.length - 1]['id'] : 0 ;
