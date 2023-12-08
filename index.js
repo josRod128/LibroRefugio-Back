@@ -42,21 +42,27 @@ app.use(cors({
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
 
-app.get('/books', (req, res) => {
+app.get('/books/:currentPage', (req, res) => {
     try {
+        // const books = JSON.parse(fs.readFileSync('./bd.json'));
+        // return only 10 books with books per page
         const books = JSON.parse(fs.readFileSync('./bd.json'));
-        res.json(books);
+        const booksFilter = books.slice((req.params.currentPage - 1) * 10, req.params.currentPage * 10);
+
+        res.json({status: 200, books: booksFilter, total: books.length});
     } catch (error) {
         res.status(500).json(error.message);
     }
 });
-app.get('/books/search/:text', (req, res) => {
+app.get('/books/search/:text/:currentPage', (req, res) => {
     try{
-        const data = req.params.text.toLowerCase();
-        const books = JSON.parse(fs.readFileSync('./bd.json'));
-        const book = books.filter((book) => book.title.toLowerCase().includes(data) || book.author.toLowerCase().includes(data));
-    
-        res.json(book);
+        const data = decodeURIComponent(req.params.text.toLowerCase());
+        const booksBD = JSON.parse(fs.readFileSync('./bd.json'));
+        const books = booksBD.filter((book) => book.title.toLowerCase().includes(data) || book.author.toLowerCase().includes(data));
+        const booksFilter = books.slice((req.params.currentPage - 1) * 10, req.params.currentPage * 10);
+
+        res.json({status: 200, books: booksFilter, total: books.length});
+
     }catch (error) {
         res.status(500).json(error.message);
     }
@@ -103,7 +109,7 @@ app.post('/book', (req, res) => {
     }
 });
 app.put('/book/:id', (req, res) => {
-    try{        
+    try{
         const id = parseInt(req.params.id);
         const books = JSON.parse(fs.readFileSync('./bd.json'));
         const cont = Object.keys(req.body).length;
@@ -143,7 +149,7 @@ app.delete('/book/:id', (req, res) => {
         const id = parseInt(req.params.id);
         const books = JSON.parse(fs.readFileSync('./bd.json'));
         const newBooks = books.filter((book) => book.id !== id);
-    
+
         fs.writeFileSync('./bd.json', JSON.stringify(newBooks));
         res.json(newBooks);
     }catch (error) {
