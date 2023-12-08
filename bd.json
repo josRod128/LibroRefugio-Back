@@ -78,5 +78,21 @@
         "yearPublication": 2019,
         "isbn": "1234567890",
         "available": true
+    },
+    {
+        "id":11,
+        "title": "Titulo 11",
+        "author": "Autor K",
+        "yearPublication": 2019,
+        "isbn": "1234567890",
+        "available": true
+    },
+    {
+        "id":12,
+        "title": "Titulo 12",
+        "author": "Autor L",
+        "yearPublication": 2019,
+        "isbn": "1234567890",
+        "available": true
     }
 ]
