@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --watch index.js",
-    "serve": "node --watch index.js"
+    "serve": "node index.js"
   },
   "keywords": [],
   "author": "",
